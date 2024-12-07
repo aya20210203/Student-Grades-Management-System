@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Shouneez Alaa",
+    "grades": [
+      {
+        "name": "CS",
+        "grade": 90.0
+      },
+      {
+        "name": "PL3",
+        "grade": 85.0
+      }
+    ]
+  }
+]
