@@ -56,3 +56,53 @@ let removeStudent id =
 //addStudent 2 "Aya" [ { name = "CS"; grade = 88.0 }; { name = "PL3"; grade = 85.0 }]
 // editStudent 1 (fun student -> { student with name = "Shouneez Alaa" })
 // removeStudent 2
+
+// 2. Grade Management
+let calculateAverage (grades: Subject list) =
+    if grades.IsEmpty then 0.0
+    else grades |> List.averageBy (fun g -> g.grade)
+
+let studentAverage id =
+    match List.tryFind (fun student -> student.id = id) students with
+    | Some student ->
+        let avg = calculateAverage student.grades
+        printfn "Student %s has an average grade of %.2f" student.name avg
+        avg
+    | None ->
+        printfn "Student with ID %d not found." id
+        -1.0
+
+let classAverage () =
+    let allGrades = students |> List.collect (fun student -> student.grades |> List.map (fun g -> g.grade))
+    if allGrades.IsEmpty then 0.0
+    else List.average allGrades
+
+let passRate passingGrade =
+    let passed = students |> List.filter (fun student -> calculateAverage student.grades >= passingGrade)
+    let rate = (float passed.Length / float students.Length) * 100.0
+    printfn "Pass rate: %.2f%%" rate
+    rate
+
+let highestAndLowestGrades () =
+    let allGrades = students |> List.collect (fun student -> student.grades |> List.map (fun g -> g.grade))
+    if allGrades.IsEmpty then
+        printfn "No grades available."
+        None
+    else
+        let maxGrade = List.max allGrades
+        let minGrade = List.min allGrades
+        printfn "Highest grade: %.2f, Lowest grade: %.2f" maxGrade minGrade
+        Some (maxGrade, minGrade)
+
+// Main Program
+[<EntryPoint>]
+let main argv =
+    loadData ()
+    printfn "Welcome to Student Grades Management System!"
+
+    // Example usage
+    printfn "Class average: %.2f" (classAverage ())
+    passRate 50.0
+    ignore (highestAndLowestGrades ())
+
+    0
