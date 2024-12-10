@@ -52,6 +52,7 @@ let removeStudent id =
     save() 
     printfn "Student with ID %d has been removed." id
 
+//loadData()
 //addStudent 1 "Shouneez" [ { name = "CS"; grade = 90.0 }; { name = "PL3"; grade = 85.0 } ]
 //addStudent 2 "Aya" [ { name = "CS"; grade = 88.0 }; { name = "PL3"; grade = 85.0 }]
 // editStudent 1 (fun student -> { student with name = "Shouneez Alaa" })
