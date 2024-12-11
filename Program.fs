@@ -96,7 +96,27 @@ let highestAndLowestGrades () =
         Some (maxGrade, minGrade)
 
 // 3. User Roles
+type Role = 
+    | Admin
+    | Viewer
 
+type User = {
+    Id: int
+    Name: string
+    Role: Role
+}
+
+// Function to handle actions based on user roles
+let performAction user action =
+    match user.Role with
+    | Admin -> 
+        printfn "Admin %s performing action: %s" user.Name action
+        match action with
+        | "AddStudent" -> printfn "Student added successfully."
+        | "EditGrades" -> printfn "Grades edited successfully."
+        | "RemoveStudent" -> printfn "Student removed successfully."
+        | _ -> printfn "Invalid action for Admin."
+        
 // Main Program
 [<EntryPoint>]
 let main argv =
