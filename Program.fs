@@ -116,7 +116,27 @@ let performAction user action =
         | "EditGrades" -> printfn "Grades edited successfully."
         | "RemoveStudent" -> printfn "Student removed successfully."
         | _ -> printfn "Invalid action for Admin."
-        
+    
+    | Viewer -> 
+        printfn "Viewer %s performing action: %s" user.Name action
+        match action with
+        | "ViewGrades" -> printfn "Grades viewed successfully."
+        | "GenerateReport" -> printfn "Report generated successfully."
+        | _ -> printfn "Permission Denied: Action not allowed for Viewer."
+
+// Example usage
+let admin = { Id = 1; Name = "AdminUser"; Role = Admin }
+let viewer = { Id = 2; Name = "ViewerUser"; Role = Viewer }
+
+// Admin actions
+performAction admin "AddStudent"
+performAction admin "EditGrades"
+performAction admin "ViewGrades"
+
+// Viewer actions
+performAction viewer "ViewGrades"
+performAction viewer "AddStudent"
+
 // Main Program
 [<EntryPoint>]
 let main argv =
