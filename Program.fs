@@ -95,6 +95,8 @@ let highestAndLowestGrades () =
         printfn "Highest grade: %.2f, Lowest grade: %.2f" maxGrade minGrade
         Some (maxGrade, minGrade)
 
+// 3. User Roles
+
 // Main Program
 [<EntryPoint>]
 let main argv =
