@@ -1,15 +1,29 @@
 [
   {
-    "id": 1,
-    "name": "Shouneez Alaa",
+    "id": 456,
+    "name": "Medo",
     "grades": [
       {
-        "name": "CS",
-        "grade": 90.0
+        "name": "Math ",
+        "grade": 60.0
       },
       {
-        "name": "PL3",
-        "grade": 85.0
+        "name": " Arabic ",
+        "grade": 90.0
+      }
+    ]
+  },
+  {
+    "id": 123,
+    "name": "Mona",
+    "grades": [
+      {
+        "name": "Math ",
+        "grade": 30.0
+      },
+      {
+        "name": " Arabic ",
+        "grade": 40.0
       }
     ]
   }

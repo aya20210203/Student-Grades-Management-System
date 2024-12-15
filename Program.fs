@@ -1,16 +1,14 @@
-﻿module Program.fs
-
-open System
-open System.IO
+﻿open System 
+open System.Drawing
+open System.Windows.Forms
 open Newtonsoft.Json
-
-// 1. Student Database:
-// Store student data (ID, name, and grades) in F# Record or List structures.
+open System.IO
 
 type Subject = {
     name: string
     grade: float
 }
+
 type Student = {
     id: int
     name: string
@@ -26,126 +24,170 @@ let loadData () =
         students <- JsonConvert.DeserializeObject<Student list>(json)
     else
         students <- []
+
 let save () =
     let json = JsonConvert.SerializeObject(students, Formatting.Indented)
     File.WriteAllText(filePath, json)
-//2. Support adding, editing, and removing student records.
-let modifyStudentsList modifier =
-    students <- modifier students
+
 let addStudent id name subjects =
     let newStudent = { id = id; name = name; grades = subjects }
-    modifyStudentsList (fun currentList -> newStudent :: currentList)
-    save() 
-    printfn "Student added: %s" name 
+    students <- newStudent :: students
+    save()
+    MessageBox.Show(sprintf "Student added: %s" name, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information) |> ignore
+
 let editStudent id updateFn =
-    modifyStudentsList (fun currentList ->
-        currentList
+    students <-
+        students
         |> List.map (fun student ->
             if student.id = id then updateFn student else student)
-    )
-    save() 
-    printfn "Student with ID %d has been updated." id
-let removeStudent id =
-    modifyStudentsList (fun currentList ->
-        currentList |> List.filter (fun student -> student.id <> id)
-    )
-    save() 
-    printfn "Student with ID %d has been removed." id
+    save()
+    MessageBox.Show(sprintf "Student with ID %d has been updated." id, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information) |> ignore
 
-//loadData()
-//addStudent 1 "Shouneez" [ { name = "CS"; grade = 90.0 }; { name = "PL3"; grade = 85.0 } ]
-//addStudent 2 "Aya" [ { name = "CS"; grade = 88.0 }; { name = "PL3"; grade = 85.0 }]
-// editStudent 1 (fun student -> { student with name = "Shouneez Alaa" })
-// removeStudent 2
+let removeStudent id =
+    students <- students |> List.filter (fun student -> student.id <> id)
+    save()
+    MessageBox.Show(sprintf "Student with ID %d has been removed." id, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information) |> ignore
 
 // 2. Grade Management
 let calculateAverage (grades: Subject list) =
     if grades.IsEmpty then 0.0
     else grades |> List.averageBy (fun g -> g.grade)
 
-let studentAverage id =
-    match List.tryFind (fun student -> student.id = id) students with
-    | Some student ->
-        let avg = calculateAverage student.grades
-        printfn "Student %s has an average grade of %.2f" student.name avg
-        avg
-    | None ->
-        printfn "Student with ID %d not found." id
-        -1.0
+let findStudentById students id =
+    List.tryFind (fun student -> student.id = id) students
 
-let classAverage () =
+let calculateStudentAverage student =
+    calculateAverage student.grades
+
+let calculateClassAverage students =
     let allGrades = students |> List.collect (fun student -> student.grades |> List.map (fun g -> g.grade))
-    if allGrades.IsEmpty then 0.0
-    else List.average allGrades
+    if allGrades.IsEmpty then None
+    else Some (List.average allGrades)
 
-let passRate passingGrade =
+let calculatePassRate students passingGrade =
     let passed = students |> List.filter (fun student -> calculateAverage student.grades >= passingGrade)
-    let rate = (float passed.Length / float students.Length) * 100.0
-    printfn "Pass rate: %.2f%%" rate
-    rate
+    if students.IsEmpty then 0.0
+    else (float passed.Length / float students.Length) * 100.0
 
-let highestAndLowestGrades () =
+let calculateExtremeGrades students =
     let allGrades = students |> List.collect (fun student -> student.grades |> List.map (fun g -> g.grade))
-    if allGrades.IsEmpty then
-        printfn "No grades available."
-        None
+    if allGrades.IsEmpty then None
+    else Some (List.max allGrades, List.min allGrades)
+
+
+// gui code
+
+let mainForm = new Form(Text = "Student Grades Management", Size = Size(1200, 800))
+let tabControl = new TabControl(Dock = DockStyle.Fill)
+
+// admin Tab (view)
+let adminTab = new TabPage(Text = "Admin")
+let adminList = new ListBox(Location = Point(20, 20), Size = Size(600, 400))
+let addButton = new Button(Text = "Add student", Location = Point(650, 50), Size = Size(120, 40), BackColor = Color.MediumPurple, ForeColor = Color.White)
+let editButton = new Button(Text = "Edit student", Location = Point(650, 120), Size = Size(120, 40), BackColor = Color.MediumPurple, ForeColor = Color.White)
+let removeButton = new Button(Text = "Remove student", Location = Point(650, 190), Size = Size(120, 40), BackColor = Color.MediumPurple, ForeColor = Color.White)
+
+adminTab.Controls.Add(adminList)
+adminTab.Controls.Add(addButton)
+adminTab.Controls.Add(editButton)
+adminTab.Controls.Add(removeButton)
+
+let refreshLists () =
+    adminList.Items.Clear()
+    students |> List.iter (fun student ->
+        let studentInfo = sprintf "ID: %d, Name: %s, Grades: [%s]" student.id student.name (String.Join(", ", student.grades |> List.map (fun g -> sprintf "%s: %.2f" g.name g.grade)))
+        adminList.Items.Add(studentInfo) |> ignore
+    )
+
+// Button Events for admin (Controller)
+addButton.Click.Add(fun _ ->
+    let inputForm = new Form(Text = "Add Student", Size = Size(400, 400))
+    let idLabel = new Label(Text = "ID:", Location = Point(10, 20), AutoSize = true)
+    let idBox = new TextBox(Location = Point(100, 20), Size = Size(150, 20))
+    let nameLabel = new Label(Text = "Name:", Location = Point(10, 60), AutoSize = true)
+    let nameBox = new TextBox(Location = Point(100, 60), Size = Size(150, 20))
+    let gradesLabel = new Label(Text = "Grades (Format: Subject1=Grade1,Subject2=Grade2):", Location = Point(10, 100), AutoSize = true)
+    let gradesBox = new TextBox(Location = Point(10, 140), Size = Size(350, 20))
+    let submitButton = new Button(Text = "Submit", Location = Point(100, 200))
+
+    submitButton.Click.Add(fun _ ->
+        try
+            let id = int idBox.Text
+            // Check if the student ID already exists
+            if List.exists (fun student -> student.id = id) students then
+                MessageBox.Show("Student ID already exists. Please enter a different ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) |> ignore
+            else
+                let name = nameBox.Text
+                let grades =
+                    gradesBox.Text.Split(',')
+                    |> Array.toList
+                    |> List.map (fun s ->
+                        let parts = s.Split('=')
+                        { name = parts.[0]; grade = float parts.[1] })
+                addStudent id name grades
+                refreshLists()
+                inputForm.Close()
+        with ex ->
+            MessageBox.Show("Invalid input: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) |> ignore
+    )
+
+    inputForm.Controls.AddRange([| idLabel; idBox; nameLabel; nameBox; gradesLabel; gradesBox; submitButton |])
+    inputForm.ShowDialog() |> ignore
+)
+
+
+editButton.Click.Add(fun _ ->
+    if adminList.SelectedItem <> null then
+        let selected = adminList.SelectedItem.ToString()
+        let parts = selected.Split(',')
+        let id = int (parts.[0].Split(':').[1].Trim())
+        let inputForm = new Form(Text = "Edit Student", Size = Size(400, 400))
+        let nameLabel = new Label(Text = "New Name:", Location = Point(10, 20), AutoSize = true)
+        let nameBox = new TextBox(Location = Point(100, 20), Size = Size(150, 20))
+        let gradesLabel = new Label(Text = "New Grades (Format: Subject1=Grade1,Subject2=Grade2):", Location = Point(10, 60), AutoSize = true)
+        let gradesBox = new TextBox(Location = Point(10, 100), Size = Size(350, 20))
+        let submitButton = new Button(Text = "Submit", Location = Point(100, 150))
+
+        submitButton.Click.Add(fun _ ->
+            try
+                let newName = nameBox.Text
+                let newGrades =
+                    gradesBox.Text.Split(',')
+                    |> Array.toList
+                    |> List.map (fun s ->
+                        let parts = s.Split('=')
+                        { name = parts.[0]; grade = float parts.[1] })
+                editStudent id (fun student -> { student with name = newName; grades = newGrades })
+                refreshLists()
+                inputForm.Close()
+            with ex ->
+                MessageBox.Show("Invalid input: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error) |> ignore
+        )
+
+        inputForm.Controls.AddRange([| nameLabel; nameBox; gradesLabel; gradesBox; submitButton |])
+        inputForm.ShowDialog() |> ignore
     else
-        let maxGrade = List.max allGrades
-        let minGrade = List.min allGrades
-        printfn "Highest grade: %.2f, Lowest grade: %.2f" maxGrade minGrade
-        Some (maxGrade, minGrade)
+        MessageBox.Show("Please select a student to edit.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning) |> ignore
+)
 
-// 3. User Roles
-type Role = 
-    | Admin
-    | Viewer
+removeButton.Click.Add(fun _ ->
+    if adminList.SelectedItem <> null then
+        let selected = adminList.SelectedItem.ToString()
+        let parts = selected.Split(',')
+        let id = int (parts.[0].Split(':').[1].Trim())
+        removeStudent id
+        refreshLists()
+    else
+        MessageBox.Show("Please select a student to remove.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning) |> ignore
+)
 
-type User = {
-    Id: int
-    Name: string
-    Role: Role
-}
+// adding tabs to tab control (will add viwer later)
+tabControl.TabPages.Add(adminTab)
+mainForm.Controls.Add(tabControl)
 
-// Function to handle actions based on user roles
-let performAction user action =
-    match user.Role with
-    | Admin -> 
-        printfn "Admin %s performing action: %s" user.Name action
-        match action with
-        | "AddStudent" -> printfn "Student added successfully."
-        | "EditGrades" -> printfn "Grades edited successfully."
-        | "RemoveStudent" -> printfn "Student removed successfully."
-        | _ -> printfn "Invalid action for Admin."
-    
-    | Viewer -> 
-        printfn "Viewer %s performing action: %s" user.Name action
-        match action with
-        | "ViewGrades" -> printfn "Grades viewed successfully."
-        | "GenerateReport" -> printfn "Report generated successfully."
-        | _ -> printfn "Permission Denied: Action not allowed for Viewer."
-
-// Example usage
-let admin = { Id = 1; Name = "AdminUser"; Role = Admin }
-let viewer = { Id = 2; Name = "ViewerUser"; Role = Viewer }
-
-// Admin actions
-performAction admin "AddStudent"
-performAction admin "EditGrades"
-performAction admin "ViewGrades"
-
-// Viewer actions
-performAction viewer "ViewGrades"
-performAction viewer "AddStudent"
-
-// Main Program
-[<EntryPoint>]
-let main argv =
-    loadData ()
-    printfn "Welcome to Student Grades Management System!"
-
-    // Example usage
-    printfn "Class average: %.2f" (classAverage ())
-    passRate 50.0
-    ignore (highestAndLowestGrades ())
-
-    0
+[<STAThread>]
+do
+    loadData()
+    refreshLists()
+    Application.EnableVisualStyles()
+    Application.Run(mainForm)
