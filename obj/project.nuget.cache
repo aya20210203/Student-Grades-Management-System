@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "3m5tFJqU20HuIw546s6J29uO2NKNhpl2jctjuoj/vEi0uGn6KIGG2+0fvxMbv2218dJz9h0eImOo69zneRr1jA==",
+  "dgSpecHash": "R0JnP+UsI7/ojyQ7Yf3H5WDXBZy7AkbHSwwAtEAz1/fLWp1T21M2ihm68RJHYfVg4w7Ph77IjwJcoNW6Y/S/jQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vip\\Documents\\GitHub\\Student-Grades-Management-System\\student_grades_management_system.fsproj",
+  "projectFilePath": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj",
   "expectedPackageFiles": [
-    "C:\\Users\\vip\\.nuget\\packages\\fsharp.core\\8.0.200\\fsharp.core.8.0.200.nupkg.sha512",
-    "C:\\Users\\vip\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\HP\\.nuget\\packages\\fsharp.core\\8.0.200\\fsharp.core.8.0.200.nupkg.sha512",
+    "C:\\Users\\HP\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

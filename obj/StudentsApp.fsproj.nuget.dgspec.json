@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\student_grades_management_system.fsproj": {}
+    "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj": {}
   },
   "projects": {
-    "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\student_grades_management_system.fsproj": {
+    "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\student_grades_management_system.fsproj",
-        "projectName": "student_grades_management_system",
-        "projectPath": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\student_grades_management_system.fsproj",
+        "projectUniqueName": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj",
+        "projectName": "StudentsApp",
+        "projectPath": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
         "outputPath": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\obj\\",
         "projectStyle": "PackageReference",
@@ -18,7 +18,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net8.0"
+          "net8.0-windows"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -26,8 +26,8 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
+          "net8.0-windows7.0": {
+            "targetAlias": "net8.0-windows",
             "projectReferences": {}
           }
         },
@@ -38,8 +38,8 @@
         }
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
           "dependencies": {
             "FSharp.Core": {
               "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
@@ -67,6 +67,9 @@
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"

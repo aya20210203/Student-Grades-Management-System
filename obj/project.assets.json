@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {
+    "net8.0-windows7.0": {
       "FSharp.Core/8.0.200": {
         "type": "package",
         "compile": {
@@ -73,7 +73,7 @@
   },
   "libraries": {
     "FSharp.Core/8.0.200": {
-      "sha512": "U016Y0NhtIEQvbmxf6Sff9lx7PTSGEFctA/kLrJr9MvNfKwjrzlK/4C2V1StgsapegWeGYW6K8Zd/D6vc9C4Yw==",
+      "sha512": "qnxoF3Fu0HzfOeYdrwmQOsLP1v+OtOMSIYkNVUwf6nGqWzL03Hh4r6VFCvCb54jlsgtt3WADVYkKkrgdeY5kiQ==",
       "type": "package",
       "path": "fsharp.core/8.0.200",
       "files": [
@@ -146,38 +146,38 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net8.0": [
+    "net8.0-windows7.0": [
       "FSharp.Core >= 8.0.200",
       "Newtonsoft.Json >= 13.0.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vip\\.nuget\\packages\\": {}
+    "C:\\Users\\HP\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vip\\Documents\\GitHub\\Student-Grades-Management-System\\student_grades_management_system.fsproj",
-      "projectName": "student_grades_management_system",
-      "projectPath": "C:\\Users\\vip\\Documents\\GitHub\\Student-Grades-Management-System\\student_grades_management_system.fsproj",
-      "packagesPath": "C:\\Users\\vip\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vip\\Documents\\GitHub\\Student-Grades-Management-System\\obj\\",
+      "projectUniqueName": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj",
+      "projectName": "StudentsApp",
+      "projectPath": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\StudentsApp.fsproj",
+      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+      "outputPath": "D:\\College\\level 4\\PL3\\Github proj\\Student-Grades-Management-System\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\vip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net8.0"
+        "net8.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\sdk\\8.0.204\\FSharp\\library-packs": {},
+        "C:\\Program Files\\dotnet\\sdk\\8.0.200\\FSharp\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net8.0-windows7.0": {
+          "targetAlias": "net8.0-windows",
           "projectReferences": {}
         }
       },
@@ -188,8 +188,8 @@
       }
     },
     "frameworks": {
-      "net8.0": {
-        "targetAlias": "net8.0",
+      "net8.0-windows7.0": {
+        "targetAlias": "net8.0-windows",
         "dependencies": {
           "FSharp.Core": {
             "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
@@ -217,9 +217,12 @@
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
+          },
+          "Microsoft.WindowsDesktop.App.WindowsForms": {
+            "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -59,3 +59,11 @@ C:\Users\vip\Documents\GitHub\Student-Grades-Management-System\bin\Debug\net8.0\
 C:\Users\vip\Documents\GitHub\Student-Grades-Management-System\obj\Debug\net8.0\student_.255941D3.Up2Date
 C:\Users\vip\Documents\GitHub\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.genruntimeconfig.cache
 C:\Users\vip\Documents\GitHub\Student-Grades-Management-System\obj\Debug\net8.0\ref\student_grades_management_system.dll
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.fsproj.AssemblyReference.cache
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.AssemblyInfoInputs.cache
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.AssemblyInfo.fs
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.fsproj.CoreCompileInputs.cache
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.sourcelink.json
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.dll
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\refint\student_grades_management_system.dll
+D:\College\level 4\PL3\Github proj\Student-Grades-Management-System\obj\Debug\net8.0\student_grades_management_system.pdb
